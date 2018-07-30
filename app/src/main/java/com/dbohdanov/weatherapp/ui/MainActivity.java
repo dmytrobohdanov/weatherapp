@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showWeatherForPlace(Place place) {
+        Log.d(TAG, "showWeatherForPlace: " + place.getLatLng().latitude + " " + place.getLatLng().longitude);
         Intent intent = new Intent(this, WeatherActivity.class);
         intent.putExtra(Constants.KEY_BUNDLE_PLACE, new Gson().toJson(place));
         startActivity(intent);

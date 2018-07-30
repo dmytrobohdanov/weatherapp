@@ -13,6 +13,6 @@ import retrofit2.http.QueryMap;
  * Retrofit's
  */
 public interface ApiService {
-    @GET("exchanges")
+    @GET("forecast")
     Single<WeatherResponseModel> getWeatherForFiveDays(@QueryMap Map<String, String> options);
 }

@@ -17,4 +17,8 @@ public class WeatherDataViewModel extends AndroidViewModel{
         super(application);
         weatherActivityPresenter = new WeatherActivityPresenter(application.getApplicationContext());
     }
+
+    public IWeatherActivityPresenter getWeatherActivityPresenter() {
+        return weatherActivityPresenter;
+    }
 }

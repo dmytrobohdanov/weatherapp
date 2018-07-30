@@ -3,6 +3,7 @@ package com.dbohdanov.weatherapp.repository.network;
 import com.dbohdanov.weatherapp.repository.data_models.DataWeatherForecast;
 import com.dbohdanov.weatherapp.repository.data_models.WeatherResponseModel;
 import com.dbohdanov.weatherapp.repository.network.retrofit.RetrofitRequestPerformer;
+import com.dbohdanov.weatherapp.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class Network implements INetwork {
                                 .setTime(responseWeatherItem.getDt())
                                 .setPressure(responseWeatherItem.getMain().getPressure())
                                 .setHumidity(responseWeatherItem.getMain().getHumidity())
-                                .setTemperature(responseWeatherItem.getMain().getTemp())
+                                .setTemperature((int)(responseWeatherItem.getMain().getTemp() - Constants.KELVIN_CELSIUS_DIFF))
                                 .setMain(responseWeatherItem.getWeather().get(0).getMain())
                                 .setDescription(responseWeatherItem.getWeather().get(0).getDescription())
                                 .setIconId(responseWeatherItem.getWeather().get(0).getIcon()));

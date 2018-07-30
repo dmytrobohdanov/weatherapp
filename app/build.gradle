@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
+    dataBinding {
+        enabled = true
+    }
+
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.dbohdanov.weatherapp"
@@ -55,6 +59,12 @@ dependencies {
 
 //    Gson
     implementation 'com.google.code.gson:gson:2.8.5'
+
+//    Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:1.1.1"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
