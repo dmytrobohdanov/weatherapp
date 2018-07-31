@@ -2,7 +2,6 @@ package com.dbohdanov.weatherapp.repository;
 
 import com.dbohdanov.weatherapp.repository.data_models.DataWeatherForecast;
 import com.dbohdanov.weatherapp.repository.local_storage.room_files.PlaceData;
-import com.google.android.gms.location.places.Place;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public interface IRepository {
 
     Flowable<List<PlaceData>> getListOfResentCities();
 
-    void addPlaceToRecent(Place place);
+    void addPlaceToRecent(PlaceData place);
 
     void removeFromRecent(PlaceData place);
 }

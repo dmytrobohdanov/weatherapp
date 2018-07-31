@@ -10,7 +10,9 @@ import android.util.Log;
 
 import com.dbohdanov.weatherapp.R;
 import com.dbohdanov.weatherapp.repository.Repository;
+import com.dbohdanov.weatherapp.repository.local_storage.room_files.PlaceData;
 import com.dbohdanov.weatherapp.ui.main_activity.IMainView;
+import com.dbohdanov.weatherapp.utils.Utils;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
@@ -35,10 +37,9 @@ public class MainActivityPresenter implements IMainActivityPresenter {
     @SuppressLint("CheckResult")
     @Override
     public void initRv(RecyclerView rvCitiesList) {
-        placesListAdapter = new PlacesListAdapter(applicationContext, new ArrayList<>());
+        placesListAdapter = new PlacesListAdapter(new ArrayList<>(), placeData -> mainView.showWeatherForPlace(placeData));
         rvCitiesList.setLayoutManager(new LinearLayoutManager(applicationContext));
         rvCitiesList.setAdapter(placesListAdapter);
-
 
         //swipe do delete
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -72,7 +73,7 @@ public class MainActivityPresenter implements IMainActivityPresenter {
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                handleNewPlace(place);
+                handleNewPlace(Utils.convertPlaceToPlaceData(place));
             }
 
             @Override
@@ -83,7 +84,7 @@ public class MainActivityPresenter implements IMainActivityPresenter {
         });
     }
 
-    private void handleNewPlace(Place place) {
+    private void handleNewPlace(PlaceData place) {
         repository.addPlaceToRecent(place);
         mainView.showWeatherForPlace(place);
     }

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dbohdanov.weatherapp.R;
-import com.dbohdanov.weatherapp.repository.data_models.CustomPlace;
+import com.dbohdanov.weatherapp.repository.local_storage.room_files.PlaceData;
 import com.dbohdanov.weatherapp.utils.Constants;
 import com.google.gson.Gson;
 
@@ -36,7 +36,7 @@ public class WeatherActivity extends AppCompatActivity implements IWeatherView {
         weatherDataViewModel.getWeatherActivityPresenter().initRv(weatherForecastsRecycle);
 
         //getting place from main activity and get weather for this place
-        CustomPlace place = new Gson().fromJson(getIntent().getStringExtra(Constants.KEY_BUNDLE_PLACE), CustomPlace.class);
+        PlaceData place = new Gson().fromJson(getIntent().getStringExtra(Constants.KEY_BUNDLE_PLACE), PlaceData.class);
         weatherDataViewModel.getWeatherActivityPresenter().showForecastForFiveDays(place);
     }
 

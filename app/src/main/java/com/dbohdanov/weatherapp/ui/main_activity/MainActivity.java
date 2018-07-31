@@ -8,9 +8,9 @@ import android.support.v7.widget.RecyclerView;
 
 import com.dbohdanov.weatherapp.R;
 import com.dbohdanov.weatherapp.presenter.main_activity.IMainActivityPresenter;
+import com.dbohdanov.weatherapp.repository.local_storage.room_files.PlaceData;
 import com.dbohdanov.weatherapp.ui.weather_activity.WeatherActivity;
 import com.dbohdanov.weatherapp.utils.Constants;
-import com.google.android.gms.location.places.Place;
 import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity implements IMainView {
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     @Override
-    public void showWeatherForPlace(Place place) {
+    public void showWeatherForPlace(PlaceData place) {
         Intent intent = new Intent(this, WeatherActivity.class);
         intent.putExtra(Constants.KEY_BUNDLE_PLACE, new Gson().toJson(place));
         startActivity(intent);

@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.dbohdanov.weatherapp.repository.Repository;
-import com.dbohdanov.weatherapp.repository.data_models.CustomPlace;
+import com.dbohdanov.weatherapp.repository.local_storage.room_files.PlaceData;
 import com.dbohdanov.weatherapp.ui.weather_activity.IWeatherView;
 
 import java.util.ArrayList;
@@ -36,13 +36,13 @@ public class WeatherActivityPresenter implements IWeatherActivityPresenter {
 
     @SuppressLint("CheckResult")
     @Override
-    public void showForecastForFiveDays(CustomPlace place) {
+    public void showForecastForFiveDays(PlaceData place) {
         weatherView.showWaitingDialog();
 
         new Repository().getForecastForFiveDays(
                 isNetworkAvailable(),
-                place.getLatLng().getLatitude(),
-                place.getLatLng().getLongitude())
+                place.getLatitude(),
+                place.getLongitude())
                 .subscribe(dataWeatherForecast -> {
                             weatherView.hideWaitingDialog();
 

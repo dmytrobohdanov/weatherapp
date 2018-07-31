@@ -1,10 +1,10 @@
 package com.dbohdanov.weatherapp.ui.main_activity;
 
-import com.google.android.gms.location.places.Place;
+import com.dbohdanov.weatherapp.repository.local_storage.room_files.PlaceData;
 
 /**
  *
  */
 public interface IMainView {
-    void showWeatherForPlace(Place place);
+    void showWeatherForPlace(PlaceData place);
 }

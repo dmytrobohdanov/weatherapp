@@ -4,8 +4,6 @@ import com.dbohdanov.weatherapp.repository.data_models.DataWeatherForecast;
 import com.dbohdanov.weatherapp.repository.local_storage.LocalStorage;
 import com.dbohdanov.weatherapp.repository.local_storage.room_files.PlaceData;
 import com.dbohdanov.weatherapp.repository.network.Network;
-import com.dbohdanov.weatherapp.utils.Utils;
-import com.google.android.gms.location.places.Place;
 
 import java.util.List;
 
@@ -44,8 +42,8 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public void addPlaceToRecent(Place place) {
-        localStorage.addCityToResent(Utils.convertPlaceToPlaceData(place));
+    public void addPlaceToRecent(PlaceData place) {
+        localStorage.addCityToResent(place);
     }
 
     @Override

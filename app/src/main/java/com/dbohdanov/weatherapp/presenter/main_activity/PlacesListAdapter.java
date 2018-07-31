@@ -1,6 +1,5 @@
 package com.dbohdanov.weatherapp.presenter.main_activity;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +14,11 @@ import java.util.List;
 
 public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.ViewHolder> {
     private ArrayList<PlaceData> places;
-    private Context context;
+    private OnItemClickListener onClickListener;
 
-    public PlacesListAdapter(Context context, ArrayList<PlaceData> places) {
-        this.context = context;
+    public PlacesListAdapter(ArrayList<PlaceData> places, OnItemClickListener onClickListener) {
         this.places = places;
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -34,6 +33,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position) {
         PlaceData selectedPlace = places.get(position);
         holder.tvPlaceName.setText(selectedPlace.getName());
+        holder.layout.setOnClickListener(v -> onClickListener.onItemClick(places.get(position)));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -57,12 +57,18 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
     }
 
 
+    public interface OnItemClickListener {
+        void onItemClick(PlaceData placeData);
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         TextView tvPlaceName;
+        View layout;
 
         ViewHolder(View v) {
             super(v);
+            layout = v.findViewById(R.id.main_activity_rv_place_layout);
             tvPlaceName = v.findViewById(R.id.main_activity_rv_place_name);
         }
     }
