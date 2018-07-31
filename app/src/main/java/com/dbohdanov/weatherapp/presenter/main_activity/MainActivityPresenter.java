@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 
 import com.dbohdanov.weatherapp.R;
@@ -17,8 +18,6 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 import java.util.ArrayList;
 
-import io.reactivex.disposables.Disposable;
-
 /**
  *
  */
@@ -27,7 +26,6 @@ public class MainActivityPresenter implements IMainActivityPresenter {
     private Context applicationContext;
     private IMainView mainView;
     private PlacesListAdapter placesListAdapter;
-    private Disposable subscriber;
 
     public MainActivityPresenter(Context applicationContext) {
         this.applicationContext = applicationContext;
@@ -41,8 +39,22 @@ public class MainActivityPresenter implements IMainActivityPresenter {
         rvCitiesList.setLayoutManager(new LinearLayoutManager(applicationContext));
         rvCitiesList.setAdapter(placesListAdapter);
 
-        subscriber = repository.getListOfResentCities()
-                .doOnNext(placeDataList -> Log.d("taag", "on next" + placeDataList.size()))
+
+        //swipe do delete
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                repository.removeFromRecent(placesListAdapter.getItem(viewHolder.getAdapterPosition()));
+            }
+        };
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(rvCitiesList);
+
+        repository.getListOfResentCities()
                 .subscribe(placesListAdapter::setItems);
     }
 

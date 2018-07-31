@@ -47,4 +47,9 @@ public class Repository implements IRepository {
     public void addPlaceToRecent(Place place) {
         localStorage.addCityToResent(Utils.convertPlaceToPlaceData(place));
     }
+
+    @Override
+    public void removeFromRecent(PlaceData place) {
+        localStorage.deleteCityFromResent(place);
+    }
 }

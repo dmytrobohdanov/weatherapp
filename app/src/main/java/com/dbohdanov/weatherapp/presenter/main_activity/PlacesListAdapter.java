@@ -52,6 +52,10 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
         notifyDataSetChanged();
     }
 
+    public PlaceData getItem(int index) {
+        return places.get(index);
+    }
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case

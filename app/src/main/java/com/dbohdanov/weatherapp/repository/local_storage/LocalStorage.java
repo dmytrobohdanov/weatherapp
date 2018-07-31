@@ -41,7 +41,10 @@ public class LocalStorage implements ILocalStorage {
 
     @Override
     public void deleteCityFromResent(PlaceData placeData) {
-        dbDao.delete(placeData);
+        Completable.fromAction(() -> dbDao.delete(placeData))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     @Override

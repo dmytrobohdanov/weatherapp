@@ -18,4 +18,6 @@ public interface IRepository {
     Flowable<List<PlaceData>> getListOfResentCities();
 
     void addPlaceToRecent(Place place);
+
+    void removeFromRecent(PlaceData place);
 }
