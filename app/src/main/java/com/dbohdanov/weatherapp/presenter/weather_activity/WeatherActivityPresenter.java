@@ -42,8 +42,9 @@ public class WeatherActivityPresenter implements IWeatherActivityPresenter {
     public void showForecastForFiveDays(PlaceData place) {
         weatherView.showWaitingDialog();
 
+        boolean isNetworkAvailable = isNetworkAvailable();
         repository.getForecastForFiveDays(
-                isNetworkAvailable(),
+                isNetworkAvailable,
                 place)
                 .subscribe(dataWeatherForecast -> {
                             weatherView.hideWaitingDialog();
@@ -58,9 +59,8 @@ public class WeatherActivityPresenter implements IWeatherActivityPresenter {
                                 weatherView.setCityName(dataWeatherForecast.getCityName());
                                 weatherAdapter.setItems(dataWeatherForecast.getWeatherItems());
 
-                                if (!dataWeatherForecast.isOnlineData()) {
-                                    weatherView.showError(
-                                            applicationContext.getResources().getString(R.string.offline));
+                                if (!isNetworkAvailable) {
+                                    weatherView.showError(applicationContext.getResources().getString(R.string.offline));
                                 }
                             }
                         },

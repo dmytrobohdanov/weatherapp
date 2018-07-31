@@ -1,7 +1,5 @@
 package com.dbohdanov.weatherapp.repository;
 
-import android.util.Log;
-
 import com.dbohdanov.weatherapp.repository.data_models.DataWeatherForecast;
 import com.dbohdanov.weatherapp.repository.local_storage.LocalStorage;
 import com.dbohdanov.weatherapp.repository.local_storage.room_files.PlaceData;
@@ -40,8 +38,6 @@ public class Repository implements IRepository {
     }
 
     private DataWeatherForecast saveForecastToCash(DataWeatherForecast dataWeatherForecast) {
-        Log.d("savingcity", "name " + dataWeatherForecast.getCityName());
-
         localStorage.saveForecast(dataWeatherForecast);
         return dataWeatherForecast;
     }
