@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,6 +32,7 @@ public class WeatherActivity extends AppCompatActivity implements IWeatherView {
         progressBar = findViewById(R.id.progressBar);
         weatherForecastsRecycle = findViewById(R.id.weather_activity_rv);
         tvCityName = findViewById(R.id.weather_activity_city_name);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         weatherDataViewModel = ViewModelProviders.of(this).get(WeatherDataViewModel.class);
 
@@ -37,6 +41,7 @@ public class WeatherActivity extends AppCompatActivity implements IWeatherView {
 
         //getting place from main activity and get weather for this place
         PlaceData place = new Gson().fromJson(getIntent().getStringExtra(Constants.KEY_BUNDLE_PLACE), PlaceData.class);
+        weatherDataViewModel.setPlace(place);
         weatherDataViewModel.getWeatherActivityPresenter().showForecastForFiveDays(place);
     }
 
@@ -59,5 +64,30 @@ public class WeatherActivity extends AppCompatActivity implements IWeatherView {
     @Override
     public void setCityName(String cityName) {
         tvCityName.setText(cityName);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.weather_act_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+//                    this.finish();
+                onBackPressed();
+                return true;
+
+            case R.id.menu_renew:
+                weatherDataViewModel
+                        .getWeatherActivityPresenter()
+                        .showForecastForFiveDays(
+                                weatherDataViewModel.getPlace());
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
