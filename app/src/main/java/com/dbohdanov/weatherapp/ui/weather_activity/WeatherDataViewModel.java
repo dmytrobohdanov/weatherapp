@@ -1,4 +1,4 @@
-package com.dbohdanov.weatherapp.ui;
+package com.dbohdanov.weatherapp.ui.weather_activity;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

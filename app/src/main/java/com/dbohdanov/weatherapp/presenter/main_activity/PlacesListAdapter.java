@@ -7,17 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import com.dbohdanov.weatherapp.R;
-import com.google.android.gms.location.places.Place;
+import com.dbohdanov.weatherapp.repository.local_storage.room_files.PlaceData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.ViewHolder> {
-    private ArrayList<Place> places;
+    private ArrayList<PlaceData> places;
     private Context context;
 
-    public PlacesListAdapter(Context context, ArrayList<Place> places) {
+    public PlacesListAdapter(Context context, ArrayList<PlaceData> places) {
         this.context = context;
         this.places = places;
     }
@@ -32,8 +32,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Place selectedPlace = places.get(position);
-        holder.tvPlaceId.setText(selectedPlace.getId());
+        PlaceData selectedPlace = places.get(position);
         holder.tvPlaceName.setText(selectedPlace.getName());
     }
 
@@ -43,20 +42,23 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Vi
         return places.size();
     }
 
-    public void addItem(Place place) {
+    public void addItem(PlaceData place) {
         places.add(place);
+        notifyDataSetChanged();
+    }
+
+    public void setItems(List<PlaceData> placeDataList) {
+        places = new ArrayList<>(placeDataList);
         notifyDataSetChanged();
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        TextView tvPlaceId;
         TextView tvPlaceName;
 
         ViewHolder(View v) {
             super(v);
-            tvPlaceId = v.findViewById(R.id.main_activity_rv_place_id);
             tvPlaceName = v.findViewById(R.id.main_activity_rv_place_name);
         }
     }

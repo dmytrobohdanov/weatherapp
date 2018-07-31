@@ -3,7 +3,7 @@ package com.dbohdanov.weatherapp.presenter.weather_activity;
 import android.support.v7.widget.RecyclerView;
 
 import com.dbohdanov.weatherapp.repository.data_models.CustomPlace;
-import com.dbohdanov.weatherapp.ui.IWeatherView;
+import com.dbohdanov.weatherapp.ui.weather_activity.IWeatherView;
 
 /**
  *

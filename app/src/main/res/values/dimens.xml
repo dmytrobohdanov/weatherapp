@@ -2,4 +2,5 @@
 <resources>
     <dimen name="weather_item_text_size">24sp</dimen>
     <dimen name="weather_item_date_text_size">20sp</dimen>
+    <dimen name="recent_city_text_size">18sp</dimen>
 </resources>

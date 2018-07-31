@@ -5,11 +5,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.dbohdanov.weatherapp.repository.Repository;
 import com.dbohdanov.weatherapp.repository.data_models.CustomPlace;
-import com.dbohdanov.weatherapp.ui.IWeatherView;
+import com.dbohdanov.weatherapp.ui.weather_activity.IWeatherView;
 
 import java.util.ArrayList;
 
@@ -17,8 +16,8 @@ import java.util.ArrayList;
  *
  */
 public class WeatherActivityPresenter implements IWeatherActivityPresenter {
-    Context applicationContext;
-    IWeatherView weatherView;
+    private Context applicationContext;
+    private IWeatherView weatherView;
     private WeatherAdapter weatherAdapter;
 
     public WeatherActivityPresenter(Context applicationContext) {
