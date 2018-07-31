@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="offline">offline</string>
+    <string name="no_such_data">no such saved data</string>
 </resources>

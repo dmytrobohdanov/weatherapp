@@ -63,6 +63,10 @@ public class DataWeatherForecast {
         return this;
     }
 
+    public boolean isOnlineData() {
+        return isOnlineData;
+    }
+
     public DataWeatherForecast setIsOnlineData(boolean isOnlineData) {
         this.isOnlineData = isOnlineData;
         return this;

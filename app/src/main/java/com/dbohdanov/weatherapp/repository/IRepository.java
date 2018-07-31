@@ -12,7 +12,8 @@ import io.reactivex.Single;
  *
  */
 public interface IRepository {
-    Single<DataWeatherForecast> getForecastForFiveDays(boolean isNetworkAvailable, double lat, double lon);
+
+    Single<DataWeatherForecast> getForecastForFiveDays(boolean isNetworkAvailable, PlaceData place);
 
     Flowable<List<PlaceData>> getListOfResentCities();
 

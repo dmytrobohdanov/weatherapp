@@ -1,5 +1,7 @@
 package com.dbohdanov.weatherapp.repository;
 
+import android.util.Log;
+
 import com.dbohdanov.weatherapp.repository.data_models.DataWeatherForecast;
 import com.dbohdanov.weatherapp.repository.local_storage.LocalStorage;
 import com.dbohdanov.weatherapp.repository.local_storage.room_files.PlaceData;
@@ -22,12 +24,13 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public Single<DataWeatherForecast> getForecastForFiveDays(boolean isNetworkAvailable, double lat, double lon) {
+    public Single<DataWeatherForecast> getForecastForFiveDays(boolean isNetworkAvailable, PlaceData place) {
         if (isNetworkAvailable) {
-            return new Network().getForecastForFiveDays(lat, lon)
-                    .map(this::saveForecastToCash);
+            return new Network().getForecastForFiveDays(place.getLatitude(), place.getLongitude())
+                    .map(this::saveForecastToCash)
+                    .map(dataWeatherForecast -> dataWeatherForecast.setIsOnlineData(true));
         } else {
-            return Single.just(localStorage.getSavedWeatheForecast(lat, lon));
+            return localStorage.getSavedWeatherForecast(place.getName());
         }
     }
 
@@ -37,6 +40,8 @@ public class Repository implements IRepository {
     }
 
     private DataWeatherForecast saveForecastToCash(DataWeatherForecast dataWeatherForecast) {
+        Log.d("savingcity", "name " + dataWeatherForecast.getCityName());
+
         localStorage.saveForecast(dataWeatherForecast);
         return dataWeatherForecast;
     }

@@ -85,7 +85,7 @@ public class MainActivityPresenter implements IMainActivityPresenter {
     }
 
     private void handleNewPlace(PlaceData place) {
-        repository.addPlaceToRecent(place);
+//        repository.addPlaceToRecent(place);
         mainView.showWeatherForPlace(place);
     }
 }

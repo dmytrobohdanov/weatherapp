@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.dbohdanov.weatherapp.R;
 import com.dbohdanov.weatherapp.repository.Repository;
 import com.dbohdanov.weatherapp.repository.local_storage.room_files.PlaceData;
 import com.dbohdanov.weatherapp.ui.weather_activity.IWeatherView;
@@ -19,9 +20,11 @@ public class WeatherActivityPresenter implements IWeatherActivityPresenter {
     private Context applicationContext;
     private IWeatherView weatherView;
     private WeatherAdapter weatherAdapter;
+    private Repository repository;
 
     public WeatherActivityPresenter(Context applicationContext) {
         this.applicationContext = applicationContext;
+        repository = new Repository();
     }
 
 
@@ -39,18 +42,26 @@ public class WeatherActivityPresenter implements IWeatherActivityPresenter {
     public void showForecastForFiveDays(PlaceData place) {
         weatherView.showWaitingDialog();
 
-        new Repository().getForecastForFiveDays(
+        repository.getForecastForFiveDays(
                 isNetworkAvailable(),
-                place.getLatitude(),
-                place.getLongitude())
+                place)
                 .subscribe(dataWeatherForecast -> {
                             weatherView.hideWaitingDialog();
 
                             if (dataWeatherForecast.getErrorMessage() != null) {
                                 weatherView.showError(dataWeatherForecast.getErrorMessage());
                             } else {
+                                repository.addPlaceToRecent(new PlaceData(dataWeatherForecast.getCityName(),
+                                        dataWeatherForecast.getLat(),
+                                        dataWeatherForecast.getLon()));
+
                                 weatherView.setCityName(dataWeatherForecast.getCityName());
                                 weatherAdapter.setItems(dataWeatherForecast.getWeatherItems());
+
+                                if (!dataWeatherForecast.isOnlineData()) {
+                                    weatherView.showError(
+                                            applicationContext.getResources().getString(R.string.offline));
+                                }
                             }
                         },
                         throwable -> {
