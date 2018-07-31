@@ -10,9 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dbohdanov.weatherapp.R;
-import com.dbohdanov.weatherapp.presenter.main_activity.PlacesListAdapter;
 import com.dbohdanov.weatherapp.repository.data_models.DataWeatherForecast;
-import com.google.android.gms.location.places.Place;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -42,7 +40,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     public void onBindViewHolder(WeatherAdapter.ViewHolder holder, int position) {
         DataWeatherForecast.WeatherItem selectedWeatherItem = weatherItems.get(position);
 
-        Date d = new Date(selectedWeatherItem.getTime());
+        Date d = new Date((long) selectedWeatherItem.getTime() * 1000);
+        Log.d("timetag", "onBindViewHolder: " + selectedWeatherItem.getTime());
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM, dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         String time = timeFormat.format(d);
